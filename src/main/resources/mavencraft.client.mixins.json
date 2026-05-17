@@ -1,0 +1,9 @@
+{
+  "required": true,
+  "package": "com.mavencraft.mixin.client",
+  "compatibilityLevel": "JAVA_25",
+  "client": ["GameRendererMixin"],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

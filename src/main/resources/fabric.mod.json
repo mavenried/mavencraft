@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "mavencraft",
+  "version": "${version}",
+  "name": "MavenCraft",
+  "description": "Mod for various things, for personal use.",
+  "authors": ["mavenried"],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/mavencraft/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": ["com.mavencraft.MavenCraftMod"],
+    "client": ["com.mavencraft.MavenCraftClient"]
+  },
+  "mixins": [
+    "mavencraft.mixins.json",
+    {
+      "config": "mavencraft.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=0.18.0",
+    "fabric-api": "*",
+    "minecraft": "~26.1"
+  }
+}
