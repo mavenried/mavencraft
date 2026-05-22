@@ -1,6 +1,7 @@
 plugins {
     id 'net.fabricmc.fabric-loom' version "${loom_version}"
     id 'maven-publish'
+    id 'com.diffplug.spotless' version "7.0.4"
 }
 
 version = project.mod_version
@@ -21,6 +22,12 @@ loom {
             sourceSet sourceSets.main
             sourceSet sourceSets.client
         }
+    }
+}
+
+spotless {
+    java {
+        palantirJavaFormat('2.71.0')
     }
 }
 

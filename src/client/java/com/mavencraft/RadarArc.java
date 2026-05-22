@@ -10,11 +10,7 @@ public class RadarArc {
 
     public float distance;
 
-    public RadarArc(
-            float angle,
-            float width,
-            float alpha,
-            float distance) {
+    public RadarArc(float angle, float width, float alpha, float distance) {
 
         this.angle = angle;
         this.width = width;
