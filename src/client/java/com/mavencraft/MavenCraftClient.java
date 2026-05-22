@@ -43,6 +43,10 @@ public class MavenCraftClient
 
   public void onInitializeClient() {
 
+    RadarManager.register();
+
+    ProjectilePredictor.register();
+
     MavenCraftRenderer.register();
 
     KeyMapping.Category category = KeyMapping.Category.register(
@@ -59,15 +63,16 @@ public class MavenCraftClient
     ClientTickEvents.END_CLIENT_TICK.register(client -> {
 
       while (toggleKey.consumeClick()) {
+
         toggleEnabled();
 
-    client.gui.setOverlayMessage(
-        net.minecraft.network.chat.Component.literal(
-            "[§bMavenCraft§r] X-ray " +
-                (MavenCraftRenderer.enabled
-                    ? "Enabled"
-                    : "Disabled")),
-        false);
+        client.gui.setOverlayMessage(
+            net.minecraft.network.chat.Component.literal(
+                "[§bMavenCraft§r] X-ray "
+                    + (MavenCraftRenderer.enabled
+                        ? "Enabled"
+                        : "Disabled")),
+            false);
       }
     });
 
@@ -234,17 +239,79 @@ public class MavenCraftClient
                                                     "blocks");
 
                                             MavenCraftRenderer
-                                                .setScanRadius(radius);
+                                                .setScanRadius(
+                                                    radius);
 
                                             return 1;
                                           })))
+
                           .then(
                               LiteralArgumentBuilder
                                   .<FabricClientCommandSource>literal(
                                       "toggle")
 
                                   .executes(ctx -> {
+
                                     toggleEnabled();
+
+                                    return 1;
+                                  })))
+
+                  .then(
+                      LiteralArgumentBuilder
+                          .<FabricClientCommandSource>literal(
+                              "radar")
+
+                          .then(
+                              LiteralArgumentBuilder
+                                  .<FabricClientCommandSource>literal(
+                                      "enable")
+
+                                  .executes(ctx -> {
+
+                                    RadarManager.enabled = true;
+
+                                    return 1;
+                                  }))
+
+                          .then(
+                              LiteralArgumentBuilder
+                                  .<FabricClientCommandSource>literal(
+                                      "disable")
+
+                                  .executes(ctx -> {
+
+                                    RadarManager.enabled = false;
+
+                                    return 1;
+                                  })))
+
+                  .then(
+                      LiteralArgumentBuilder
+                          .<FabricClientCommandSource>literal(
+                              "aim")
+
+                          .then(
+                              LiteralArgumentBuilder
+                                  .<FabricClientCommandSource>literal(
+                                      "enable")
+
+                                  .executes(ctx -> {
+
+                                    ProjectilePredictor.enabled = true;
+
+                                    return 1;
+                                  }))
+
+                          .then(
+                              LiteralArgumentBuilder
+                                  .<FabricClientCommandSource>literal(
+                                      "disable")
+
+                                  .executes(ctx -> {
+
+                                    ProjectilePredictor.enabled = false;
+
                                     return 1;
                                   }))));
         });

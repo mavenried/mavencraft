@@ -2,7 +2,11 @@
   "required": true,
   "package": "com.mavencraft.mixin.client",
   "compatibilityLevel": "JAVA_25",
-  "client": ["GameRendererMixin"],
+  "client": [
+    "GameRendererMixin",
+    "GuiMixin",
+    "LevelRendererMixin"
+  ],
   "injectors": {
     "defaultRequire": 1
   }
