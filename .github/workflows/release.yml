@@ -1,0 +1,48 @@
+name: Release Mod
+
+on:
+  push:
+    tags:
+      - '[0-9]+\.[0-9]+\.[0-9]+'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 25
+
+      - name: Make Gradle executable
+        run: chmod +x gradlew
+
+      - name: Build mod
+        run: ./gradlew build
+
+      - name: Locate release jar
+        id: jar
+        run: |
+          JAR=$(find build/libs -type f \
+            ! -name "*-sources.jar" \
+            ! -name "*-dev.jar" \
+            ! -name "*-javadoc.jar" \
+            | head -n 1)
+
+          echo "jar=$JAR" >> $GITHUB_OUTPUT
+
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ${{ steps.jar.outputs.jar }}
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
