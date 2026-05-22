@@ -40,11 +40,29 @@ public class LevelRendererMixin {
         }
 
         if (ProjectilePath.IMPACT != null) {
+            Vec3 c =
+                    ProjectilePath.IMPACT;
 
-            Gizmos.point(
-                    ProjectilePath.IMPACT,
+            double s = 0.20;
+
+            Gizmos.line(
+                    c.add(-s, 0.0, 0.0),
+                    c.add( s, 0.0, 0.0),
                     0xFFFF3030,
-                    6.0f);
+                    3.0f);
+
+            Gizmos.line(
+                    c.add(0.0, -s, 0.0),
+                    c.add(0.0,  s, 0.0),
+                    0xFFFF3030,
+                    3.0f);
+
+            Gizmos.line(
+                    c.add(0.0, 0.0, -s),
+                    c.add(0.0, 0.0,  s),
+                    0xFFFF3030,
+                    3.0f);
+
         }
     }
 }
