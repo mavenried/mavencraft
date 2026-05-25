@@ -61,11 +61,7 @@ public final class ProjectilePredictor {
             return;
         }
 
-        Vec3 pos = mc.player
-                .getEyePosition()
-                .add(mc.player
-                        .getLookAngle()
-                        .scale(stack.getItem() instanceof net.minecraft.world.item.CrossbowItem ? 0.28 : 0.16));
+        Vec3 pos = mc.player.getEyePosition().add(mc.player.getLookAngle().scale(0.16));
 
         Vec3 velocity = mc.player.getLookAngle().normalize();
 
@@ -87,13 +83,13 @@ public final class ProjectilePredictor {
 
             velocity = velocity.scale(3.15);
 
-            Vec3 move = mc.player.getDeltaMovement();
-
-            velocity = velocity.add(move.x * 0.15, 0.0, move.z * 0.15);
-
         } else {
 
             velocity = velocity.scale(1.5);
+
+            Vec3 move = mc.player.getDeltaMovement();
+
+            velocity = velocity.add(move.x, move.y, move.z);
         }
 
         for (int i = 0; i < STEPS; i++) {
@@ -120,7 +116,8 @@ public final class ProjectilePredictor {
 
             pos = next;
 
-            if (stack.getItem() instanceof BowItem) {
+            if (stack.getItem() instanceof BowItem
+                    || stack.getItem() instanceof net.minecraft.world.item.CrossbowItem) {
 
                 velocity = velocity.scale(0.99);
 
