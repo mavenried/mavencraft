@@ -3,10 +3,13 @@ package com.mavencraft;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.item.BowItem;
+import net.minecraft.world.item.CrossbowItem;
+import net.minecraft.world.item.EggItem;
 import net.minecraft.world.item.EnderpearlItem;
 import net.minecraft.world.item.ExperienceBottleItem;
 import net.minecraft.world.item.SnowballItem;
 import net.minecraft.world.item.ThrowablePotionItem;
+import net.minecraft.world.item.TridentItem;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 
@@ -42,9 +45,11 @@ public final class ProjectilePredictor {
         var stack = mc.player.getMainHandItem();
 
         boolean supported = stack.getItem() instanceof BowItem
-                || stack.getItem() instanceof net.minecraft.world.item.CrossbowItem
+                || stack.getItem() instanceof CrossbowItem
+                || stack.getItem() instanceof TridentItem
                 || stack.getItem() instanceof SnowballItem
                 || stack.getItem() instanceof EnderpearlItem
+                || stack.getItem() instanceof EggItem
                 || stack.getItem() instanceof ThrowablePotionItem
                 || stack.getItem() instanceof ExperienceBottleItem;
 
@@ -56,8 +61,7 @@ public final class ProjectilePredictor {
             return;
         }
 
-        if (stack.getItem() instanceof net.minecraft.world.item.CrossbowItem
-                && !net.minecraft.world.item.CrossbowItem.isCharged(stack)) {
+        if (stack.getItem() instanceof CrossbowItem && !CrossbowItem.isCharged(stack)) {
             return;
         }
 
@@ -79,9 +83,13 @@ public final class ProjectilePredictor {
 
             velocity = velocity.scale(power * 3.0f);
 
-        } else if (stack.getItem() instanceof net.minecraft.world.item.CrossbowItem) {
+        } else if (stack.getItem() instanceof CrossbowItem) {
 
             velocity = velocity.scale(3.15);
+
+        } else if (stack.getItem() instanceof TridentItem) {
+
+            velocity = velocity.scale(2.0);
 
         } else {
 
@@ -116,8 +124,7 @@ public final class ProjectilePredictor {
 
             pos = next;
 
-            if (stack.getItem() instanceof BowItem
-                    || stack.getItem() instanceof net.minecraft.world.item.CrossbowItem) {
+            if (stack.getItem() instanceof BowItem || stack.getItem() instanceof CrossbowItem) {
 
                 velocity = velocity.scale(0.99);
 
