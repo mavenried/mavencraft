@@ -11,20 +11,4 @@ public record OreColor(String blockId, int argb) {
         int argb = (a << 24) | (r << 16) | (g << 8) | b;
         return new OreColor(blockId, argb);
     }
-
-    public float red() {
-        return ((argb >> 16) & 0xFF) / 255f;
-    }
-
-    public float green() {
-        return ((argb >> 8) & 0xFF) / 255f;
-    }
-
-    public float blue() {
-        return (argb & 0xFF) / 255f;
-    }
-
-    public float alpha() {
-        return ((argb >> 24) & 0xFF) / 255f;
-    }
 }

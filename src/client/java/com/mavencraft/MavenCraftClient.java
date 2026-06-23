@@ -53,7 +53,7 @@ public class MavenCraftClient implements ClientModInitializer {
 
                 toggleEnabled();
 
-                client.gui.setOverlayMessage(
+                client.gui.hud.setOverlayMessage(
                         net.minecraft.network.chat.Component.literal(
                                 "[§bMavenCraft§r] X-ray " + (MavenCraftRenderer.enabled ? "Enabled" : "Disabled")),
                         false);

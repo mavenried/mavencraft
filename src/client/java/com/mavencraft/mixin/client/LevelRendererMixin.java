@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(LevelRenderer.class)
 public class LevelRendererMixin {
 
-    @Inject(method = "collectPerFrameGizmos", at = @At("TAIL"))
+    @Inject(method = "collectPerFrameRenderThreadGizmos", at = @At("TAIL"))
     private void mavencraft$trajectory(CallbackInfoReturnable<Gizmos.TemporaryCollection> cir) {
 
         for (int i = 1; i < ProjectilePath.POINTS.size(); i++) {

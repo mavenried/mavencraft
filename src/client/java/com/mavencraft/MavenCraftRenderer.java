@@ -1,34 +1,22 @@
 package com.mavencraft;
 
-import com.mojang.blaze3d.pipeline.RenderPipeline;
-import com.mojang.blaze3d.vertex.BufferBuilder;
-import com.mojang.blaze3d.vertex.ByteBufferBuilder;
-import com.mojang.blaze3d.vertex.DefaultVertexFormat;
-import com.mojang.blaze3d.vertex.MeshData;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 import net.fabricmc.fabric.api.client.rendering.v1.level.LevelRenderContext;
 import net.fabricmc.fabric.api.client.rendering.v1.level.LevelRenderEvents;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.RenderPipelines;
-import net.minecraft.client.renderer.rendertype.RenderSetup;
-import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.Identifier;
+import net.minecraft.gizmos.GizmoStyle;
+import net.minecraft.gizmos.Gizmos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.LevelChunk;
-import net.minecraft.world.phys.Vec3;
-import org.joml.Matrix4fc;
 
 public final class MavenCraftRenderer {
 
@@ -79,19 +67,7 @@ public final class MavenCraftRenderer {
 
     private record FoundOre(BlockPos pos, OreColor color) {}
 
-    private static final RenderPipeline ORE_ESP_PIPELINE =
-            RenderPipelines.register(RenderPipeline.builder(RenderPipelines.DEBUG_FILLED_SNIPPET)
-                    .withLocation(Identifier.fromNamespaceAndPath("mavencraft", "pipeline/mavencraft"))
-                    .withDepthStencilState(Optional.empty())
-                    .withVertexFormat(DefaultVertexFormat.POSITION_COLOR, VertexFormat.Mode.DEBUG_LINES)
-                    .build());
-
-    private static final RenderType ORE_ESP_RENDER_TYPE = RenderType.create(
-            "mavencraft", RenderSetup.builder(ORE_ESP_PIPELINE).createRenderSetup());
-
-    private static final ByteBufferBuilder ALLOCATOR = new ByteBufferBuilder(RenderType.SMALL_BUFFER_SIZE);
-
-    private static BufferBuilder buf;
+    private static final float STROKE_WIDTH = 2.0f;
 
     private static String normalizeOreId(String id) {
 
@@ -197,7 +173,7 @@ public final class MavenCraftRenderer {
     }
 
     public static void register() {
-        LevelRenderEvents.BEFORE_TRANSLUCENT_TERRAIN.register(MavenCraftRenderer::onRender);
+        LevelRenderEvents.BEFORE_GIZMOS.register(MavenCraftRenderer::onRender);
     }
 
     private static void onRender(LevelRenderContext ctx) {
@@ -233,93 +209,10 @@ public final class MavenCraftRenderer {
             scanChunks(mc.level, mc.player.blockPosition());
         }
 
-        if (foundOres.isEmpty()) {
-            return;
-        }
-
-        PoseStack matrices = ctx.poseStack();
-
-        Vec3 camera = ctx.levelState().cameraRenderState.pos;
-
-        matrices.pushPose();
-
-        matrices.translate(-camera.x, -camera.y, -camera.z);
-
-        if (buf == null) {
-            buf = new BufferBuilder(
-                    ALLOCATOR, ORE_ESP_PIPELINE.getVertexFormatMode(), ORE_ESP_PIPELINE.getVertexFormat());
-        }
-
-        Matrix4fc pose = matrices.last().pose();
-
         for (FoundOre ore : foundOres) {
-            drawBox(pose, ore.pos(), ore.color());
+            Gizmos.cuboid(ore.pos(), GizmoStyle.stroke(ore.color().argb(), STROKE_WIDTH))
+                    .setAlwaysOnTop();
         }
-
-        matrices.popPose();
-
-        MeshData mesh = buf.build();
-
-        if (mesh == null) {
-            return;
-        }
-
-        ORE_ESP_RENDER_TYPE.draw(mesh);
-
-        mesh.close();
-
-        buf = null;
-    }
-
-    private static void drawBox(Matrix4fc m, BlockPos pos, OreColor c) {
-
-        float inflate = 0.0f;
-
-        float x0 = pos.getX() - inflate;
-        float y0 = pos.getY() - inflate;
-        float z0 = pos.getZ() - inflate;
-
-        float x1 = pos.getX() + 1.0f + inflate;
-        float y1 = pos.getY() + 1.0f + inflate;
-        float z1 = pos.getZ() + 1.0f + inflate;
-
-        float r = c.red();
-        float g = c.green();
-        float b = c.blue();
-        float a = c.alpha();
-
-        line(m, x0, y0, z0, x1, y0, z0, r, g, b, a);
-        line(m, x1, y0, z0, x1, y0, z1, r, g, b, a);
-        line(m, x1, y0, z1, x0, y0, z1, r, g, b, a);
-        line(m, x0, y0, z1, x0, y0, z0, r, g, b, a);
-
-        line(m, x0, y1, z0, x1, y1, z0, r, g, b, a);
-        line(m, x1, y1, z0, x1, y1, z1, r, g, b, a);
-        line(m, x1, y1, z1, x0, y1, z1, r, g, b, a);
-        line(m, x0, y1, z1, x0, y1, z0, r, g, b, a);
-
-        line(m, x0, y0, z0, x0, y1, z0, r, g, b, a);
-        line(m, x1, y0, z0, x1, y1, z0, r, g, b, a);
-        line(m, x1, y0, z1, x1, y1, z1, r, g, b, a);
-        line(m, x0, y0, z1, x0, y1, z1, r, g, b, a);
-    }
-
-    private static void line(
-            Matrix4fc m,
-            float x0,
-            float y0,
-            float z0,
-            float x1,
-            float y1,
-            float z1,
-            float r,
-            float g,
-            float b,
-            float a) {
-
-        buf.addVertex(m, x0, y0, z0).setColor(r, g, b, a);
-
-        buf.addVertex(m, x1, y1, z1).setColor(r, g, b, a);
     }
 
     private static void scanChunks(Level level, BlockPos center) {
