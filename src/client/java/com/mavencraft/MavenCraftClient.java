@@ -10,6 +10,7 @@ import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
 import net.minecraft.client.KeyMapping;
+import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.resources.Identifier;
 import org.lwjgl.glfw.GLFW;
 
@@ -66,6 +67,8 @@ public class MavenCraftClient implements ClientModInitializer {
                             .then(LiteralArgumentBuilder.<FabricClientCommandSource>literal("enable")
                                     .then(RequiredArgumentBuilder.<FabricClientCommandSource, String>argument(
                                                     "id", StringArgumentType.string())
+                                            .suggests((ctx, builder) -> SharedSuggestionProvider.suggest(
+                                                    MavenCraftRenderer.ITEM_ALIAS_MAP.keySet(), builder))
                                             .executes(ctx -> {
                                                 String id = StringArgumentType.getString(ctx, "id");
 
@@ -80,6 +83,8 @@ public class MavenCraftClient implements ClientModInitializer {
                             .then(LiteralArgumentBuilder.<FabricClientCommandSource>literal("disable")
                                     .then(RequiredArgumentBuilder.<FabricClientCommandSource, String>argument(
                                                     "id", StringArgumentType.string())
+                                            .suggests((ctx, builder) -> SharedSuggestionProvider.suggest(
+                                                    MavenCraftRenderer.ITEM_ALIAS_MAP.keySet(), builder))
                                             .executes(ctx -> {
                                                 String id = StringArgumentType.getString(ctx, "id");
 
@@ -94,6 +99,8 @@ public class MavenCraftClient implements ClientModInitializer {
                             .then(LiteralArgumentBuilder.<FabricClientCommandSource>literal("only")
                                     .then(RequiredArgumentBuilder.<FabricClientCommandSource, String>argument(
                                                     "id", StringArgumentType.string())
+                                            .suggests((ctx, builder) -> SharedSuggestionProvider.suggest(
+                                                    MavenCraftRenderer.ITEM_ALIAS_MAP.keySet(), builder))
                                             .executes(ctx -> {
                                                 String id = StringArgumentType.getString(ctx, "id");
 

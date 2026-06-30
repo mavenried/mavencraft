@@ -69,46 +69,54 @@ public final class MavenCraftRenderer {
 
     private static final float STROKE_WIDTH = 2.0f;
 
-    private static String normalizeOreId(String id) {
+    public static final Map<String, List<String>> ITEM_ALIAS_MAP = Map.ofEntries(
+            // Overworld ores — alias covers both stone and deepslate variants
+            Map.entry("coal", List.of("minecraft:coal_ore", "minecraft:deepslate_coal_ore")),
+            Map.entry("iron", List.of("minecraft:iron_ore", "minecraft:deepslate_iron_ore")),
+            Map.entry("copper", List.of("minecraft:copper_ore", "minecraft:deepslate_copper_ore")),
+            Map.entry("gold", List.of("minecraft:gold_ore", "minecraft:deepslate_gold_ore")),
+            Map.entry("redstone", List.of("minecraft:redstone_ore", "minecraft:deepslate_redstone_ore")),
+            Map.entry("lapis", List.of("minecraft:lapis_ore", "minecraft:deepslate_lapis_ore")),
+            Map.entry("diamond", List.of("minecraft:diamond_ore", "minecraft:deepslate_diamond_ore")),
+            Map.entry("emerald", List.of("minecraft:emerald_ore", "minecraft:deepslate_emerald_ore")),
+            // Deepslate-only aliases
+            Map.entry("deep_coal", List.of("minecraft:deepslate_coal_ore")),
+            Map.entry("deep_iron", List.of("minecraft:deepslate_iron_ore")),
+            Map.entry("deep_copper", List.of("minecraft:deepslate_copper_ore")),
+            Map.entry("deep_gold", List.of("minecraft:deepslate_gold_ore")),
+            Map.entry("deep_redstone", List.of("minecraft:deepslate_redstone_ore")),
+            Map.entry("deep_lapis", List.of("minecraft:deepslate_lapis_ore")),
+            Map.entry("deep_diamond", List.of("minecraft:deepslate_diamond_ore")),
+            Map.entry("deep_emerald", List.of("minecraft:deepslate_emerald_ore")),
+            // Nether ores
+            Map.entry("quartz", List.of("minecraft:nether_quartz_ore")),
+            Map.entry("nether_gold", List.of("minecraft:nether_gold_ore")),
+            Map.entry("netherite", List.of("minecraft:ancient_debris")));
 
-        if (!id.contains(":")) {
-            id = "minecraft:" + id;
+    private static List<String> resolveOreIds(String id) {
+        List<String> aliased = ITEM_ALIAS_MAP.get(id.toLowerCase());
+        if (aliased != null) return aliased;
+
+        // Fallback: accept a raw block id, namespace it if needed
+        if (!id.contains(":")) id = "minecraft:" + id;
+        if (!id.endsWith("_ore") && !id.endsWith("_deepslate_ore")) id += "_ore";
+
+        // Auto-pair overworld stone+deepslate when given a bare block id
+        if (id.startsWith("minecraft:") && id.endsWith("_ore") && !id.contains("deepslate") && !id.contains("nether")) {
+            return List.of(id, id.replace("minecraft:", "minecraft:deepslate_"));
         }
 
-        if (!id.endsWith("_ore") && !id.endsWith("_deepslate_ore")) {
-
-            id += "_ore";
-        }
-
-        return id;
+        return List.of(id);
     }
 
     public static void enableOre(String id) {
-
-        String normalized = normalizeOreId(id);
-
-        enabledOres.add(normalized);
-
+        for (String blockId : resolveOreIds(id)) enabledOres.add(blockId);
         saveState();
-
-        if (normalized.startsWith("minecraft:") && normalized.endsWith("_ore") && !normalized.contains("deepslate")) {
-
-            enabledOres.add(normalized.replace("minecraft:", "minecraft:deepslate_"));
-        }
     }
 
     public static void disableOre(String id) {
-
-        String normalized = normalizeOreId(id);
-
-        enabledOres.remove(normalized);
-
+        for (String blockId : resolveOreIds(id)) enabledOres.remove(blockId);
         saveState();
-
-        if (normalized.startsWith("minecraft:") && normalized.endsWith("_ore") && !normalized.contains("deepslate")) {
-
-            enabledOres.remove(normalized.replace("minecraft:", "minecraft:deepslate_"));
-        }
     }
 
     public static void enableAllOres() {
@@ -128,9 +136,8 @@ public final class MavenCraftRenderer {
 
     public static void onlyOre(String id) {
         enabledOres.clear();
-
+        for (String blockId : resolveOreIds(id)) enabledOres.add(blockId);
         saveState();
-        enableOre(id);
     }
 
     public static void setScanRadius(int blocks) {
