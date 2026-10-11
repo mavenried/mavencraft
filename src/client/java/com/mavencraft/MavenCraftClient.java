@@ -12,7 +12,6 @@ import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.resources.Identifier;
-import org.lwjgl.glfw.GLFW;
 
 public class MavenCraftClient implements ClientModInitializer {
 
@@ -46,8 +45,7 @@ public class MavenCraftClient implements ClientModInitializer {
         KeyMapping.Category category =
                 KeyMapping.Category.register(Identifier.fromNamespaceAndPath("mavencraft", "general"));
 
-        toggleKey = KeyMappingHelper.registerKeyMapping(
-                new KeyMapping("key.mavencraft.xray_toggle", GLFW.GLFW_KEY_Y, category));
+        toggleKey = KeyMappingHelper.registerKeyMapping(new KeyMapping("key.mavencraft.xray_toggle", 89, category));
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             while (toggleKey.consumeClick()) {

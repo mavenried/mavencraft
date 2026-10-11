@@ -14,16 +14,16 @@ A client-side Fabric mod for Minecraft 1.26.x that bundles three utility feature
 
 | Dependency    | Version        |
 | ------------- | -------------- |
-| Minecraft     | `26.1.x`       |
-| Fabric Loader | `≥ 0.18.0`     |
-| Fabric API    | `0.144.3+26.1` |
+| Minecraft     | `26.3.x`       |
+| Fabric Loader | `≥ 0.19.3`     |
+| Fabric API    | `0.161.0+26.3` |
 | Java          | `25`           |
 
 ---
 
 ## Installation
 
-1. Install [Fabric Loader](https://fabricmc.net/use/) for Minecraft `26.1.x`.
+1. Install [Fabric Loader](https://fabricmc.net/use/) for Minecraft `26.3.x`.
 2. Drop `mavencraft-<version>.jar` into your `mods/` folder.
 3. Launch the game — a `mavencraft.json` config file is created in your config directory on first run.
 
