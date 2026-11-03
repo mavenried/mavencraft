@@ -1,11 +1,12 @@
 # MavenCraft
 
-A client-side Fabric mod for Minecraft 1.26.x that bundles four utility features:
+A client-side Fabric mod for Minecraft 1.26.x with utility overlays and optional Fantastic Wings flight boosting:
 
 - **X-Ray / Ore ESP** — highlights ores through walls with configurable colors and scan radius
 - **Threat Radar** — a compass-ring HUD that shows nearby hostile mobs as directional chevrons
 - **Trajectory Preview** — draws a real-time arc for bows, crossbows, ender pearls, snowballs, and splash/lingering potions
 - **Breadcrumb Trail** — leaves connected waypoints along your route so you can find your way back
+- **Sprint Flight Multiplier** — boosts horizontal flight acceleration while sprinting with Fantastic Wings
 
 > **Personal-use mod.** Use responsibly and only on servers where client-side mods are permitted.
 
@@ -26,7 +27,8 @@ A client-side Fabric mod for Minecraft 1.26.x that bundles four utility features
 
 1. Install [Fabric Loader](https://fabricmc.net/use/) for Minecraft `26.3.x`.
 2. Drop `mavencraft-<version>.jar` into your `mods/` folder.
-3. Launch the game — a `mavencraft.json` config file is created in your config directory on first run.
+3. Launch the game — MavenCraft config files are created in your config directory as needed.
+4. To use the sprint flight multiplier, also install Fantastic Wings for Minecraft `26.3.x`.
 
 ---
 
@@ -34,7 +36,7 @@ A client-side Fabric mod for Minecraft 1.26.x that bundles four utility features
 
 ### Mod Menu Settings
 
-Install [Mod Menu](https://modrinth.com/mod/modmenu) to open MavenCraft's settings screen from the Mods menu. It provides toggles for X-ray, radar, projectile preview, breadcrumbs, and individual ores. The scan-radius slider ranges from 16 to 256 blocks in 16-block steps, and the ore list scrolls.
+Install [Mod Menu](https://modrinth.com/mod/modmenu) to open MavenCraft's settings screen from the Mods menu. It provides toggles for X-ray, radar, projectile preview, breadcrumbs, and individual ores, plus sliders for scan radius and the sprint flight multiplier. The scan-radius slider ranges from 16 to 256 blocks in 16-block steps, and the ore list scrolls.
 
 ### X-Ray / Ore ESP
 
@@ -104,6 +106,19 @@ Leaves small connected waypoints along your path. Markers are placed farther apa
 | `/mavencraft breadcrumbs clear`    | Clear the current trail      |
 
 **Keybind:** `B` — toggle breadcrumbs (rebindable in Controls settings, category _MavenCraft_). Disabling clears the current trail.
+
+---
+
+### Sprint Flight Multiplier
+
+When Fantastic Wings is installed, sprinting with forward input increases horizontal flight acceleration. The multiplier leaves the mod's vertical acceleration unchanged, preserving its pitch-based lift.
+
+| Command | Description |
+| ------- | ----------- |
+| `/mavencraft flight multiplier` | Show the current multiplier |
+| `/mavencraft flight multiplier <0.1-10.0>` | Set the multiplier |
+
+The default is `3.15`. The Mod Menu slider ranges from `0.10` to `10.00`. Settings persist to `<config-dir>/mavencraft-flight.properties`.
 
 ---
 
