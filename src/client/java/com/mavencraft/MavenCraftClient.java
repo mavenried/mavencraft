@@ -16,6 +16,7 @@ import net.minecraft.resources.Identifier;
 public class MavenCraftClient implements ClientModInitializer {
 
     private static KeyMapping toggleKey;
+    private static KeyMapping breadcrumbToggleKey;
 
     private void toggleEnabled() {
         MavenCraftRenderer.setEnabled(!MavenCraftRenderer.enabled);
@@ -30,10 +31,14 @@ public class MavenCraftClient implements ClientModInitializer {
 
         MavenCraftRenderer.register();
 
+        BreadcrumbTrail.register();
+
         KeyMapping.Category category =
                 KeyMapping.Category.register(Identifier.fromNamespaceAndPath("mavencraft", "general"));
 
         toggleKey = KeyMappingHelper.registerKeyMapping(new KeyMapping("key.mavencraft.xray_toggle", 89, category));
+        breadcrumbToggleKey = KeyMappingHelper.registerKeyMapping(
+                new KeyMapping("key.mavencraft.breadcrumb_toggle", 66, category));
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             while (toggleKey.consumeClick()) {
@@ -43,6 +48,14 @@ public class MavenCraftClient implements ClientModInitializer {
                 client.gui.hud.setOverlayMessage(
                         net.minecraft.network.chat.Component.literal(
                                 "[§bMavenCraft§r] X-ray " + (MavenCraftRenderer.enabled ? "Enabled" : "Disabled")),
+                        false);
+            }
+
+            while (breadcrumbToggleKey.consumeClick()) {
+                BreadcrumbTrail.setEnabled(!BreadcrumbTrail.enabled);
+                client.gui.hud.setOverlayMessage(
+                        net.minecraft.network.chat.Component.literal("[§bMavenCraft§r] Breadcrumbs "
+                                + (BreadcrumbTrail.enabled ? "Enabled" : "Disabled")),
                         false);
             }
         });
@@ -158,6 +171,27 @@ public class MavenCraftClient implements ClientModInitializer {
                                     .executes(ctx -> {
                                         ProjectilePredictor.enabled = false;
 
+                                        return 1;
+                                    })))
+                    .then(LiteralArgumentBuilder.<FabricClientCommandSource>literal("breadcrumbs")
+                            .then(LiteralArgumentBuilder.<FabricClientCommandSource>literal("enable")
+                                    .executes(ctx -> {
+                                        BreadcrumbTrail.setEnabled(true);
+                                        return 1;
+                                    }))
+                            .then(LiteralArgumentBuilder.<FabricClientCommandSource>literal("disable")
+                                    .executes(ctx -> {
+                                        BreadcrumbTrail.setEnabled(false);
+                                        return 1;
+                                    }))
+                            .then(LiteralArgumentBuilder.<FabricClientCommandSource>literal("toggle")
+                                    .executes(ctx -> {
+                                        BreadcrumbTrail.setEnabled(!BreadcrumbTrail.enabled);
+                                        return 1;
+                                    }))
+                            .then(LiteralArgumentBuilder.<FabricClientCommandSource>literal("clear")
+                                    .executes(ctx -> {
+                                        BreadcrumbTrail.clear();
                                         return 1;
                                     }))));
         });
