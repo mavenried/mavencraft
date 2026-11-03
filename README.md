@@ -1,10 +1,11 @@
 # MavenCraft
 
-A client-side Fabric mod for Minecraft 1.26.x that bundles three utility features:
+A client-side Fabric mod for Minecraft 1.26.x that bundles four utility features:
 
 - **X-Ray / Ore ESP** — highlights ores through walls with configurable colors and scan radius
 - **Threat Radar** — a compass-ring HUD that shows nearby hostile mobs as directional chevrons
 - **Trajectory Preview** — draws a real-time arc for bows, crossbows, ender pearls, snowballs, and splash/lingering potions
+- **Breadcrumb Trail** — leaves connected waypoints along your route so you can find your way back
 
 > **Personal-use mod.** Use responsibly and only on servers where client-side mods are permitted.
 
@@ -30,6 +31,10 @@ A client-side Fabric mod for Minecraft 1.26.x that bundles three utility feature
 ---
 
 ## Features
+
+### Mod Menu Settings
+
+Install [Mod Menu](https://modrinth.com/mod/modmenu) to open MavenCraft's settings screen from the Mods menu. It provides toggles for X-ray, radar, projectile preview, breadcrumbs, and individual ores. The scan-radius slider ranges from 16 to 256 blocks in 16-block steps, and the ore list scrolls.
 
 ### X-Ray / Ore ESP
 
@@ -84,6 +89,21 @@ When the player holds a supported item, a white line traces the predicted arc an
 | `/mavencraft aim disable` | Disable trajectory preview |
 
 Bow arcs account for charge level. Crossbow arcs include player momentum. Other thrown items use a fixed initial speed.
+
+---
+
+### Breadcrumb Trail
+
+Leaves small connected waypoints along your path. Markers are placed farther apart at higher speeds and closer together when your direction changes, making the trail useful on foot and while flying. The trail holds up to 1,024 markers and clears when disabled or when changing worlds.
+
+| Command                            | Description                  |
+| ---------------------------------- | ---------------------------- |
+| `/mavencraft breadcrumbs enable`   | Start recording a trail      |
+| `/mavencraft breadcrumbs disable`  | Disable and clear the trail  |
+| `/mavencraft breadcrumbs toggle`   | Toggle the breadcrumb trail  |
+| `/mavencraft breadcrumbs clear`    | Clear the current trail      |
+
+**Keybind:** `B` — toggle breadcrumbs (rebindable in Controls settings, category _MavenCraft_). Disabling clears the current trail.
 
 ---
 
