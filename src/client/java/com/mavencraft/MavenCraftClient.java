@@ -37,8 +37,8 @@ public class MavenCraftClient implements ClientModInitializer {
                 KeyMapping.Category.register(Identifier.fromNamespaceAndPath("mavencraft", "general"));
 
         toggleKey = KeyMappingHelper.registerKeyMapping(new KeyMapping("key.mavencraft.xray_toggle", 89, category));
-        breadcrumbToggleKey = KeyMappingHelper.registerKeyMapping(
-                new KeyMapping("key.mavencraft.breadcrumb_toggle", 66, category));
+        breadcrumbToggleKey =
+                KeyMappingHelper.registerKeyMapping(new KeyMapping("key.mavencraft.breadcrumb_toggle", 66, category));
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             while (toggleKey.consumeClick()) {
@@ -54,8 +54,8 @@ public class MavenCraftClient implements ClientModInitializer {
             while (breadcrumbToggleKey.consumeClick()) {
                 BreadcrumbTrail.setEnabled(!BreadcrumbTrail.enabled);
                 client.gui.hud.setOverlayMessage(
-                        net.minecraft.network.chat.Component.literal("[§bMavenCraft§r] Breadcrumbs "
-                                + (BreadcrumbTrail.enabled ? "Enabled" : "Disabled")),
+                        net.minecraft.network.chat.Component.literal(
+                                "[§bMavenCraft§r] Breadcrumbs " + (BreadcrumbTrail.enabled ? "Enabled" : "Disabled")),
                         false);
             }
         });

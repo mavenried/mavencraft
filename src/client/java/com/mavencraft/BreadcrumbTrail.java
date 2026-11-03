@@ -89,7 +89,8 @@ public final class BreadcrumbTrail {
         boolean reachedSpacing = distanceFromLastMarkerSquared >= spacing * spacing;
         boolean turned = false;
 
-        if (movementLengthSquared > 1.0E-6 && distanceFromLastMarkerSquared >= TURN_MARKER_MIN_DISTANCE * TURN_MARKER_MIN_DISTANCE) {
+        if (movementLengthSquared > 1.0E-6
+                && distanceFromLastMarkerSquared >= TURN_MARKER_MIN_DISTANCE * TURN_MARKER_MIN_DISTANCE) {
             Vec3 direction = movement.normalize();
             Vec3 trailDirection = position.subtract(lastMarker).normalize();
             turned = direction.dot(trailDirection) < TURN_DOT_THRESHOLD;
@@ -119,7 +120,8 @@ public final class BreadcrumbTrail {
             if (previous != null && marker.connectFromPrevious()) {
                 Vec3 previousTrailPoint = previous.position().add(0.0, 0.2, 0.0);
                 Vec3 currentTrailPoint = position.add(0.0, 0.2, 0.0);
-                Gizmos.line(previousTrailPoint, currentTrailPoint, TRAIL_COLOR, TRAIL_WIDTH).setAlwaysOnTop();
+                Gizmos.line(previousTrailPoint, currentTrailPoint, TRAIL_COLOR, TRAIL_WIDTH)
+                        .setAlwaysOnTop();
             }
 
             double x = position.x;
