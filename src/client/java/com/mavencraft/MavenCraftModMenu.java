@@ -65,6 +65,13 @@ public final class MavenCraftModMenu implements ModMenuApi {
             addRenderableWidget(new ScanRadiusSlider(
                     center + gap / 2, top, halfWidth, 20, (MavenCraftRenderer.getScanRadius() - 16) / 240.0));
 
+            addRenderableWidget(Button.builder(breadcrumbLabel(), button -> {
+                        BreadcrumbTrail.setEnabled(!BreadcrumbTrail.enabled);
+                        button.setMessage(breadcrumbLabel());
+                    })
+                    .bounds(center - 150, 82, 300, 20)
+                    .build());
+
             int visibleRows = visibleOreRows();
             int visibleCount = visibleRows * ORE_COLUMN_COUNT;
             int endIndex = Math.min(ORE_IDS.size(), oreScrollOffset + visibleCount);
@@ -146,6 +153,10 @@ public final class MavenCraftModMenu implements ModMenuApi {
 
         private static Component aimLabel() {
             return stateLabel("Projectile aim", ProjectilePredictor.enabled);
+        }
+
+        private static Component breadcrumbLabel() {
+            return stateLabel("Breadcrumb trail", BreadcrumbTrail.enabled);
         }
 
         private int visibleOreRows() {
