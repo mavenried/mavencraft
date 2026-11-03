@@ -11,7 +11,8 @@
   "environment": "*",
   "entrypoints": {
     "main": ["com.mavencraft.MavenCraftMod"],
-    "client": ["com.mavencraft.MavenCraftClient"]
+    "client": ["com.mavencraft.MavenCraftClient"],
+    "modmenu": ["com.mavencraft.MavenCraftModMenu"]
   },
   "mixins": [
     "mavencraft.mixins.json",

@@ -99,6 +99,7 @@ public final class MavenCraftRenderer {
 
         // Fallback: accept a raw block id, namespace it if needed
         if (!id.contains(":")) id = "minecraft:" + id;
+        if (id.equals("minecraft:ancient_debris")) return List.of(id);
         if (!id.endsWith("_ore") && !id.endsWith("_deepslate_ore")) id += "_ore";
 
         // Auto-pair overworld stone+deepslate when given a bare block id
@@ -150,6 +151,17 @@ public final class MavenCraftRenderer {
 
         invalidateCache();
         forceRescan();
+    }
+
+    public static int getScanRadius() {
+        return scanRadiusBlocks;
+    }
+
+    public static void setEnabled(boolean value) {
+        enabled = value;
+        saveState();
+        invalidateCache();
+        if (value) forceRescan();
     }
 
     public static void forceRescan() {

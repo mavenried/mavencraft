@@ -18,19 +18,7 @@ public class MavenCraftClient implements ClientModInitializer {
     private static KeyMapping toggleKey;
 
     private void toggleEnabled() {
-
-        MavenCraftRenderer.enabled = !MavenCraftRenderer.enabled;
-
-        MavenCraftRenderer.forceRescan();
-
-        if (!MavenCraftRenderer.enabled) {
-
-            MavenCraftRenderer.invalidateCache();
-
-        } else {
-
-            MavenCraftRenderer.forceRescan();
-        }
+        MavenCraftRenderer.setEnabled(!MavenCraftRenderer.enabled);
     }
 
     @Override
