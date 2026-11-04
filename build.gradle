@@ -31,7 +31,7 @@ loom {
 
 spotless {
     java {
-        palantirJavaFormat('2.71.0')
+        palantirJavaFormat('2.103.0')
     }
 }
 

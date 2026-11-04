@@ -4,9 +4,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Properties;
+import net.fabricmc.loader.api.FabricLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import net.fabricmc.loader.api.FabricLoader;
 
 /** Shared setting used by the Fantastic Wings mixin and client controls. */
 public final class FlightMultiplierConfig {
@@ -16,9 +16,7 @@ public final class FlightMultiplierConfig {
     public static final float MAX_MULTIPLIER = 10.0F;
 
     private static final Logger LOGGER = LoggerFactory.getLogger("MavenCraft");
-    private static final Path FILE = FabricLoader.getInstance()
-            .getConfigDir()
-            .resolve("mavencraft-flight.properties");
+    private static final Path FILE = FabricLoader.getInstance().getConfigDir().resolve("mavencraft-flight.properties");
 
     private static volatile float multiplier = load();
 

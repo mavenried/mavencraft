@@ -178,8 +178,9 @@ public class MavenCraftClient implements ClientModInitializer {
                     .then(LiteralArgumentBuilder.<FabricClientCommandSource>literal("flight")
                             .then(LiteralArgumentBuilder.<FabricClientCommandSource>literal("multiplier")
                                     .executes(ctx -> {
-                                        ctx.getSource().sendFeedback(Component.literal("Sprint flight multiplier: "
-                                                + FlightMultiplierConfig.getMultiplier() + "x"));
+                                        ctx.getSource()
+                                                .sendFeedback(Component.literal("Sprint flight multiplier: "
+                                                        + FlightMultiplierConfig.getMultiplier() + "x"));
                                         return 1;
                                     })
                                     .then(RequiredArgumentBuilder.<FabricClientCommandSource, Float>argument(
@@ -190,8 +191,9 @@ public class MavenCraftClient implements ClientModInitializer {
                                             .executes(ctx -> {
                                                 float value = FloatArgumentType.getFloat(ctx, "value");
                                                 FlightMultiplierConfig.setMultiplier(value);
-                                                ctx.getSource().sendFeedback(Component.literal(
-                                                        "Sprint flight multiplier set to " + value + "x"));
+                                                ctx.getSource()
+                                                        .sendFeedback(Component.literal(
+                                                                "Sprint flight multiplier set to " + value + "x"));
                                                 return 1;
                                             }))))
                     .then(LiteralArgumentBuilder.<FabricClientCommandSource>literal("breadcrumbs")

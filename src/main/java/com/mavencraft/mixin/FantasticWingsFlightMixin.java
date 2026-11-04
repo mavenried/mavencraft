@@ -19,10 +19,11 @@ public abstract class FantasticWingsFlightMixin {
 
     @ModifyArgs(
             method = "onWornUpdate",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/world/phys/Vec3;add(DDD)Lnet/minecraft/world/phys/Vec3;",
-                    ordinal = 0),
+            at =
+                    @At(
+                            value = "INVOKE",
+                            target = "Lnet/minecraft/world/phys/Vec3;add(DDD)Lnet/minecraft/world/phys/Vec3;",
+                            ordinal = 0),
             require = 1)
     private void mavencraft$boostHorizontalSprintFlightAcceleration(Args args, Player player) {
         if (!player.isSprinting() || player.zza <= 0.0F) return;
