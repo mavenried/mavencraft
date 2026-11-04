@@ -1,5 +1,6 @@
 package com.mavencraft;
 
+import com.mojang.brigadier.arguments.FloatArgumentType;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
@@ -11,6 +12,7 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.commands.SharedSuggestionProvider;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 
 public class MavenCraftClient implements ClientModInitializer {
@@ -173,6 +175,25 @@ public class MavenCraftClient implements ClientModInitializer {
 
                                         return 1;
                                     })))
+                    .then(LiteralArgumentBuilder.<FabricClientCommandSource>literal("flight")
+                            .then(LiteralArgumentBuilder.<FabricClientCommandSource>literal("multiplier")
+                                    .executes(ctx -> {
+                                        ctx.getSource().sendFeedback(Component.literal("Sprint flight multiplier: "
+                                                + FlightMultiplierConfig.getMultiplier() + "x"));
+                                        return 1;
+                                    })
+                                    .then(RequiredArgumentBuilder.<FabricClientCommandSource, Float>argument(
+                                                    "value",
+                                                    FloatArgumentType.floatArg(
+                                                            FlightMultiplierConfig.MIN_MULTIPLIER,
+                                                            FlightMultiplierConfig.MAX_MULTIPLIER))
+                                            .executes(ctx -> {
+                                                float value = FloatArgumentType.getFloat(ctx, "value");
+                                                FlightMultiplierConfig.setMultiplier(value);
+                                                ctx.getSource().sendFeedback(Component.literal(
+                                                        "Sprint flight multiplier set to " + value + "x"));
+                                                return 1;
+                                            }))))
                     .then(LiteralArgumentBuilder.<FabricClientCommandSource>literal("breadcrumbs")
                             .then(LiteralArgumentBuilder.<FabricClientCommandSource>literal("enable")
                                     .executes(ctx -> {

@@ -2,7 +2,9 @@
   "required": true,
   "package": "com.mavencraft.mixin",
   "compatibilityLevel": "JAVA_25",
-  "mixins": [],
+  "mixins": [
+    "FantasticWingsFlightMixin"
+  ],
   "injectors": {
     "defaultRequire": 1
   }

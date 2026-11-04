@@ -4,6 +4,7 @@ import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 import net.minecraft.client.gui.components.AbstractSliderButton;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
@@ -11,7 +12,7 @@ import net.minecraft.network.chat.Component;
 
 public final class MavenCraftModMenu implements ModMenuApi {
 
-    private static final int ORE_LIST_TOP = 128;
+    private static final int ORE_LIST_TOP = 152;
     private static final int ORE_LIST_BOTTOM_PADDING = 38;
     private static final int ORE_ROW_HEIGHT = 21;
     private static final int ORE_COLUMN_COUNT = 2;
@@ -65,11 +66,19 @@ public final class MavenCraftModMenu implements ModMenuApi {
             addRenderableWidget(new ScanRadiusSlider(
                     center + gap / 2, top, halfWidth, 20, (MavenCraftRenderer.getScanRadius() - 16) / 240.0));
 
+            addRenderableWidget(new FlightMultiplierSlider(
+                    center - 150,
+                    82,
+                    300,
+                    20,
+                    (FlightMultiplierConfig.getMultiplier() - FlightMultiplierConfig.MIN_MULTIPLIER)
+                            / (FlightMultiplierConfig.MAX_MULTIPLIER - FlightMultiplierConfig.MIN_MULTIPLIER)));
+
             addRenderableWidget(Button.builder(breadcrumbLabel(), button -> {
                         BreadcrumbTrail.setEnabled(!BreadcrumbTrail.enabled);
                         button.setMessage(breadcrumbLabel());
                     })
-                    .bounds(center - 150, 82, 300, 20)
+                    .bounds(center - 150, 106, 300, 20)
                     .build());
 
             int visibleRows = visibleOreRows();
@@ -80,7 +89,7 @@ public final class MavenCraftModMenu implements ModMenuApi {
                     : "Enabled ores · " + (oreScrollOffset + 1) + "–" + endIndex + " of " + ORE_IDS.size()
                             + " · scroll to browse";
             Button rangeLabel = Button.builder(Component.literal(range), button -> {})
-                    .bounds(center - 150, 106, 300, 18)
+                    .bounds(center - 150, 130, 300, 18)
                     .build();
             rangeLabel.active = false;
             addRenderableWidget(rangeLabel);
@@ -203,6 +212,41 @@ public final class MavenCraftModMenu implements ModMenuApi {
 
         private int radius() {
             return 16 + (int) Math.round(value * STEPS) * 16;
+        }
+    }
+
+    private static final class FlightMultiplierSlider extends AbstractSliderButton {
+        private static final int STEPS = 198;
+
+        private FlightMultiplierSlider(int x, int y, int width, int height, double value) {
+            super(x, y, width, height, Component.empty(), value);
+            setValue(value);
+            updateMessage();
+        }
+
+        @Override
+        protected void setValue(double value) {
+            super.setValue(Math.round(Math.clamp(value, 0.0, 1.0) * STEPS) / (double) STEPS);
+        }
+
+        @Override
+        protected void updateMessage() {
+            updateMessageForMultiplier(multiplier());
+        }
+
+        private void updateMessageForMultiplier(float value) {
+            setMessage(Component.literal(String.format(Locale.ROOT, "Sprint flight multiplier: %.2fx", value)));
+        }
+
+        @Override
+        protected void applyValue() {
+            float value = multiplier();
+            FlightMultiplierConfig.setMultiplier(value);
+            updateMessageForMultiplier(value);
+        }
+
+        private float multiplier() {
+            return (float) (FlightMultiplierConfig.MIN_MULTIPLIER + Math.round(value * STEPS) * 0.05D);
         }
     }
 }
