@@ -15,7 +15,9 @@ public final class FantasticWingsBridge {
     public static String currentWing(ServerPlayer player) {
         Flight flight = ModRegistry.FLIGHT_ATTACHMENT_TYPE.getOrDefault(player, Flight.VOID);
         return flight.wings()
-                .map(holder -> holder.unwrapKey().map(key -> key.identifier().getPath()).orElse(null))
+                .map(holder -> holder.unwrapKey()
+                        .map(key -> key.identifier().getPath())
+                        .orElse(null))
                 .orElse(null);
     }
 

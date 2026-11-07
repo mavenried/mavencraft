@@ -1,5 +1,12 @@
 package com.mavencraft;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
+import java.util.UUID;
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
@@ -9,14 +16,6 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.storage.LevelResource;
 import org.slf4j.Logger;
-
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
-import java.util.UUID;
 
 /** Persists Fantastic Wings selections across death and reconnects when that optional mod is installed. */
 public final class WingsPersistence {
@@ -75,9 +74,12 @@ public final class WingsPersistence {
             if (current != null) {
                 if (!current.equals(state.wing)) {
                     state.wing = current;
-                    MavenCraftHud.show(player, Component.literal("Saved ")
-                            .append(MavenCraftHud.value(displayName(current), net.minecraft.ChatFormatting.GREEN))
-                            .append(" wings."));
+                    MavenCraftHud.show(
+                            player,
+                            Component.literal("Saved ")
+                                    .append(MavenCraftHud.value(
+                                            displayName(current), net.minecraft.ChatFormatting.GREEN))
+                                    .append(" wings."));
                     save();
                 }
                 if (state.graceTicks == 0) state.removalArmed = true;
@@ -93,11 +95,13 @@ public final class WingsPersistence {
     private static void announce(ServerPlayer player) {
         String current = currentWing(player);
         if (current == UNKNOWN_WING_STATE) return;
-        MavenCraftHud.show(player, current == null
-                ? Component.literal("Active. No wings are set.")
-                : Component.literal("Active. Current wings: ")
-                        .append(MavenCraftHud.value(displayName(current), net.minecraft.ChatFormatting.GREEN))
-                        .append("."));
+        MavenCraftHud.show(
+                player,
+                current == null
+                        ? Component.literal("Active. No wings are set.")
+                        : Component.literal("Active. Current wings: ")
+                                .append(MavenCraftHud.value(displayName(current), net.minecraft.ChatFormatting.GREEN))
+                                .append("."));
     }
 
     private static boolean isAvailable() {
@@ -127,11 +131,17 @@ public final class WingsPersistence {
                     .invoke(null, player, wing);
             state.removalArmed = false;
             state.graceTicks = 40;
-            MavenCraftHud.show(player, Component.literal("Restored your ")
-                    .append(MavenCraftHud.value(displayName(wing), net.minecraft.ChatFormatting.GREEN))
-                    .append(" wings."));
+            MavenCraftHud.show(
+                    player,
+                    Component.literal("Restored your ")
+                            .append(MavenCraftHud.value(displayName(wing), net.minecraft.ChatFormatting.GREEN))
+                            .append(" wings."));
         } catch (ReflectiveOperationException | LinkageError e) {
-            LOGGER.warn("Could not restore {} wings for {}", wing, player.getGameProfile().name(), e);
+            LOGGER.warn(
+                    "Could not restore {} wings for {}",
+                    wing,
+                    player.getGameProfile().name(),
+                    e);
         }
     }
 
@@ -142,8 +152,8 @@ public final class WingsPersistence {
         state.removalArmed = false;
         state.graceTicks = 40;
         save();
-        MavenCraftHud.show(player, Component.literal("You have forsaken the skies.")
-                .withStyle(net.minecraft.ChatFormatting.GRAY));
+        MavenCraftHud.show(
+                player, Component.literal("You have forsaken the skies.").withStyle(net.minecraft.ChatFormatting.GRAY));
     }
 
     private static String displayName(String id) {

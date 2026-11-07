@@ -10,8 +10,8 @@ import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallba
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
-import net.minecraft.client.KeyMapping;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.KeyMapping;
 import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ServerboundChatCommandPacket;
@@ -49,13 +49,17 @@ public class MavenCraftClient implements ClientModInitializer {
 
                 toggleEnabled();
 
-                showHud(client, "X-ray " + (MavenCraftRenderer.enabled ? "Enabled" : "Disabled"),
+                showHud(
+                        client,
+                        "X-ray " + (MavenCraftRenderer.enabled ? "Enabled" : "Disabled"),
                         MavenCraftRenderer.enabled ? ChatFormatting.GREEN : ChatFormatting.RED);
             }
 
             while (breadcrumbToggleKey.consumeClick()) {
                 BreadcrumbTrail.setEnabled(!BreadcrumbTrail.enabled);
-                showHud(client, "Breadcrumbs " + (BreadcrumbTrail.enabled ? "Enabled" : "Disabled"),
+                showHud(
+                        client,
+                        "Breadcrumbs " + (BreadcrumbTrail.enabled ? "Enabled" : "Disabled"),
                         BreadcrumbTrail.enabled ? ChatFormatting.GREEN : ChatFormatting.RED);
             }
         });
@@ -76,7 +80,10 @@ public class MavenCraftClient implements ClientModInitializer {
                                                 MavenCraftRenderer.invalidateCache();
 
                                                 MavenCraftRenderer.forceRescan();
-                                                showHud(ctx.getSource().getClient(), "X-ray enabled for " + id, ChatFormatting.GREEN);
+                                                showHud(
+                                                        ctx.getSource().getClient(),
+                                                        "X-ray enabled for " + id,
+                                                        ChatFormatting.GREEN);
 
                                                 return 1;
                                             })))
@@ -93,7 +100,10 @@ public class MavenCraftClient implements ClientModInitializer {
                                                 MavenCraftRenderer.invalidateCache();
 
                                                 MavenCraftRenderer.forceRescan();
-                                                showHud(ctx.getSource().getClient(), "X-ray disabled for " + id, ChatFormatting.RED);
+                                                showHud(
+                                                        ctx.getSource().getClient(),
+                                                        "X-ray disabled for " + id,
+                                                        ChatFormatting.RED);
 
                                                 return 1;
                                             })))
@@ -110,7 +120,10 @@ public class MavenCraftClient implements ClientModInitializer {
                                                 MavenCraftRenderer.invalidateCache();
 
                                                 MavenCraftRenderer.forceRescan();
-                                                showHud(ctx.getSource().getClient(), "Showing only " + id, ChatFormatting.GOLD);
+                                                showHud(
+                                                        ctx.getSource().getClient(),
+                                                        "Showing only " + id,
+                                                        ChatFormatting.GOLD);
 
                                                 return 1;
                                             })))
@@ -143,14 +156,19 @@ public class MavenCraftClient implements ClientModInitializer {
                                                 int radius = IntegerArgumentType.getInteger(ctx, "blocks");
 
                                                 MavenCraftRenderer.setScanRadius(radius);
-                                                showHud(ctx.getSource().getClient(), "X-ray radius set to " + radius + " blocks", ChatFormatting.AQUA);
+                                                showHud(
+                                                        ctx.getSource().getClient(),
+                                                        "X-ray radius set to " + radius + " blocks",
+                                                        ChatFormatting.AQUA);
 
                                                 return 1;
                                             })))
                             .then(LiteralArgumentBuilder.<FabricClientCommandSource>literal("toggle")
                                     .executes(ctx -> {
                                         toggleEnabled();
-                                        showHud(ctx.getSource().getClient(), "X-ray " + (MavenCraftRenderer.enabled ? "Enabled" : "Disabled"),
+                                        showHud(
+                                                ctx.getSource().getClient(),
+                                                "X-ray " + (MavenCraftRenderer.enabled ? "Enabled" : "Disabled"),
                                                 MavenCraftRenderer.enabled ? ChatFormatting.GREEN : ChatFormatting.RED);
 
                                         return 1;
@@ -174,22 +192,31 @@ public class MavenCraftClient implements ClientModInitializer {
                             .then(LiteralArgumentBuilder.<FabricClientCommandSource>literal("enable")
                                     .executes(ctx -> {
                                         ProjectilePredictor.enabled = true;
-                                        showHud(ctx.getSource().getClient(), "Projectile aim Enabled", ChatFormatting.GREEN);
+                                        showHud(
+                                                ctx.getSource().getClient(),
+                                                "Projectile aim Enabled",
+                                                ChatFormatting.GREEN);
 
                                         return 1;
                                     }))
                             .then(LiteralArgumentBuilder.<FabricClientCommandSource>literal("disable")
                                     .executes(ctx -> {
                                         ProjectilePredictor.enabled = false;
-                                        showHud(ctx.getSource().getClient(), "Projectile aim Disabled", ChatFormatting.RED);
+                                        showHud(
+                                                ctx.getSource().getClient(),
+                                                "Projectile aim Disabled",
+                                                ChatFormatting.RED);
 
                                         return 1;
                                     })))
                     .then(LiteralArgumentBuilder.<FabricClientCommandSource>literal("flight")
                             .then(LiteralArgumentBuilder.<FabricClientCommandSource>literal("multiplier")
                                     .executes(ctx -> {
-                                        showHud(ctx.getSource().getClient(), "Sprint flight multiplier: "
-                                                + FlightMultiplierConfig.getMultiplier() + "x", ChatFormatting.AQUA);
+                                        showHud(
+                                                ctx.getSource().getClient(),
+                                                "Sprint flight multiplier: " + FlightMultiplierConfig.getMultiplier()
+                                                        + "x",
+                                                ChatFormatting.AQUA);
                                         return 1;
                                     })
                                     .then(RequiredArgumentBuilder.<FabricClientCommandSource, Float>argument(
@@ -200,8 +227,10 @@ public class MavenCraftClient implements ClientModInitializer {
                                             .executes(ctx -> {
                                                 float value = FloatArgumentType.getFloat(ctx, "value");
                                                 FlightMultiplierConfig.setMultiplier(value);
-                                                showHud(ctx.getSource().getClient(), "Sprint flight multiplier set to "
-                                                        + value + "x", ChatFormatting.GREEN);
+                                                showHud(
+                                                        ctx.getSource().getClient(),
+                                                        "Sprint flight multiplier set to " + value + "x",
+                                                        ChatFormatting.GREEN);
                                                 return 1;
                                             }))))
                     .then(LiteralArgumentBuilder.<FabricClientCommandSource>literal("creepers")
@@ -217,27 +246,37 @@ public class MavenCraftClient implements ClientModInitializer {
                             .then(LiteralArgumentBuilder.<FabricClientCommandSource>literal("enable")
                                     .executes(ctx -> {
                                         BreadcrumbTrail.setEnabled(true);
-                                        showHud(ctx.getSource().getClient(), "Breadcrumbs Enabled", ChatFormatting.GREEN);
+                                        showHud(
+                                                ctx.getSource().getClient(),
+                                                "Breadcrumbs Enabled",
+                                                ChatFormatting.GREEN);
                                         return 1;
                                     }))
                             .then(LiteralArgumentBuilder.<FabricClientCommandSource>literal("disable")
                                     .executes(ctx -> {
                                         BreadcrumbTrail.setEnabled(false);
-                                        showHud(ctx.getSource().getClient(), "Breadcrumbs Disabled", ChatFormatting.RED);
+                                        showHud(
+                                                ctx.getSource().getClient(),
+                                                "Breadcrumbs Disabled",
+                                                ChatFormatting.RED);
                                         return 1;
                                     }))
                             .then(LiteralArgumentBuilder.<FabricClientCommandSource>literal("toggle")
                                     .executes(ctx -> {
                                         BreadcrumbTrail.setEnabled(!BreadcrumbTrail.enabled);
-                                        showHud(ctx.getSource().getClient(), "Breadcrumbs "
-                                                + (BreadcrumbTrail.enabled ? "Enabled" : "Disabled"),
+                                        showHud(
+                                                ctx.getSource().getClient(),
+                                                "Breadcrumbs " + (BreadcrumbTrail.enabled ? "Enabled" : "Disabled"),
                                                 BreadcrumbTrail.enabled ? ChatFormatting.GREEN : ChatFormatting.RED);
                                         return 1;
                                     }))
                             .then(LiteralArgumentBuilder.<FabricClientCommandSource>literal("clear")
                                     .executes(ctx -> {
                                         BreadcrumbTrail.clear();
-                                        showHud(ctx.getSource().getClient(), "Breadcrumbs cleared", ChatFormatting.AQUA);
+                                        showHud(
+                                                ctx.getSource().getClient(),
+                                                "Breadcrumbs cleared",
+                                                ChatFormatting.AQUA);
                                         return 1;
                                     }))));
         });

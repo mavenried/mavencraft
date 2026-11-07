@@ -1,23 +1,23 @@
 package com.mavencraft;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Properties;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
+import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
-import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.storage.LevelResource;
 import org.slf4j.Logger;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.Properties;
-
 /** Server-wide toggle for creeper terrain damage, persisted in the world's data directory. */
 public final class CreeperBlockDamage {
     private static final Logger LOGGER = MavenCraftMod.LOGGER;
     private static final String FILE_NAME = "mavencraft-creeper.properties";
+
     public enum Mode {
         VANILLA,
         NO_BLOCK_DAMAGE,
@@ -48,8 +48,7 @@ public final class CreeperBlockDamage {
         dispatcher.register(Commands.literal("mavencraft-server")
                 .requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS))
                 .then(Commands.literal("creepers")
-                        .then(Commands.literal("vanilla")
-                                .executes(context -> set(context.getSource(), Mode.VANILLA)))
+                        .then(Commands.literal("vanilla").executes(context -> set(context.getSource(), Mode.VANILLA)))
                         .then(Commands.literal("no-block-damage")
                                 .executes(context -> set(context.getSource(), Mode.NO_BLOCK_DAMAGE)))
                         .then(Commands.literal("no-damage")
