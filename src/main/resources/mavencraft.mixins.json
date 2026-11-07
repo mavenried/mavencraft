@@ -3,7 +3,9 @@
   "package": "com.mavencraft.mixin",
   "compatibilityLevel": "JAVA_25",
   "mixins": [
-    "FantasticWingsFlightMixin"
+    "FantasticWingsFlightMixin",
+    "CreeperBlockDamageMixin",
+    "FantasticWingsTakeBloodMixin"
   ],
   "injectors": {
     "defaultRequire": 1
