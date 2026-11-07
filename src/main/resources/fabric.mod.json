@@ -3,7 +3,7 @@
   "id": "mavencraft",
   "version": "${version}",
   "name": "MavenCraft",
-  "description": "Mod for various things, for personal use.",
+  "description": "Client utilities, creeper explosion controls, and optional Fantastic Wings persistence.",
   "authors": [
     "mavenried"
   ],
@@ -30,7 +30,7 @@
     }
   ],
   "depends": {
-    "fabricloader": ">=0.19.3",
+    "fabricloader": ">=0.20.1",
     "fabric-api": "*",
     "minecraft": "~26.3"
   },
