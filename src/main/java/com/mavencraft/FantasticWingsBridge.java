@@ -16,7 +16,8 @@ public final class FantasticWingsBridge {
     private FantasticWingsBridge() {}
 
     public static String currentWing(ServerPlayer player) throws ReflectiveOperationException {
-        Object flight = invoke(staticField(REGISTRY, "FLIGHT_ATTACHMENT_TYPE"), "getOrDefault", player, staticField(FLIGHT, "VOID"));
+        Object flight = invoke(
+                staticField(REGISTRY, "FLIGHT_ATTACHMENT_TYPE"), "getOrDefault", player, staticField(FLIGHT, "VOID"));
         Object wings = invoke(flight, "wings");
         if (!(wings instanceof Optional<?> optional) || optional.isEmpty()) return null;
 
