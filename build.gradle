@@ -47,11 +47,8 @@ spotless {
 }
 
 dependencies {
-    // Compile-time target for the optional Fantastic Wings compatibility mixin.
-    // This jar is not bundled into the MavenCraft output.
-    compileOnly files("libs/fantasticwings-v26.3.1.jar")
-    compileOnly "maven.modrinth:QAGBst4M:vbwu116x" // Puzzles Lib API for wing attachment access
-    // Local run dependencies for testing Fantastic Wings. These stay out of the mod jar.
+    // Local run dependencies for testing the optional Fantastic Wings integration.
+    // These stay out of the MavenCraft mod jar and are not needed to compile it.
     runtimeOnly files("libs/fantasticwings-v26.3.1.jar")
     runtimeOnly "maven.modrinth:QAGBst4M:vbwu116x" // Puzzles Lib 26.3.16 Fabric
     runtimeOnly "maven.modrinth:ohNO6lps:JpKvrr9J" // Forge Config API Port 26.3.1 Fabric
