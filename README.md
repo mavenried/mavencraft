@@ -1,12 +1,14 @@
 # MavenCraft
 
-A client-side Fabric mod for Minecraft 1.26.x with utility overlays and optional Fantastic Wings flight boosting:
+A Fabric mod for Minecraft 26.3 with client overlays, server-side gameplay features, and optional Fantastic Wings integration:
 
 - **X-Ray / Ore ESP** — highlights ores through walls with configurable colors and scan radius
 - **Threat Radar** — a compass-ring HUD that shows nearby hostile mobs as directional chevrons
 - **Trajectory Preview** — draws a real-time arc for bows, crossbows, ender pearls, snowballs, and splash/lingering potions
 - **Breadcrumb Trail** — leaves connected waypoints along your route so you can find your way back
 - **Sprint Flight Multiplier** — boosts horizontal flight acceleration while sprinting with Fantastic Wings
+- **Fantastic Wings persistence** — restores saved wings after death or rejoining; drinking bat blood clears the saved type
+- **Creeper explosion modes** — choose vanilla explosions, no block damage, or no damage at all
 
 > **Personal-use mod.** Use responsibly and only on servers where client-side mods are permitted.
 
@@ -17,8 +19,8 @@ A client-side Fabric mod for Minecraft 1.26.x with utility overlays and optional
 | Dependency    | Version        |
 | ------------- | -------------- |
 | Minecraft     | `26.3.x`       |
-| Fabric Loader | `≥ 0.19.3`     |
-| Fabric API    | `0.161.0+26.3` |
+| Fabric Loader | `≥ 0.20.1`     |
+| Fabric API    | `0.165.2+26.3` |
 | Java          | `25`           |
 
 ---
@@ -112,6 +114,21 @@ Leaves small connected waypoints along your path. Markers are placed farther apa
 ### Sprint Flight Multiplier
 
 When Fantastic Wings is installed, sprinting with forward input increases horizontal flight acceleration. The multiplier leaves the mod's vertical acceleration unchanged, preserving its pitch-based lift.
+
+MavenCraft also saves the current wing type and restores it after death or rejoining. Drinking Fantastic Wings bat blood clears the saved type. If wings are removed by another means, MavenCraft restores them after a two-second grace period.
+
+### Creeper explosion mode
+
+Operator commands, saved per world:
+
+| Command | Behavior |
+| --- | --- |
+| `/mavencraft creepers vanilla` | Normal block and entity damage |
+| `/mavencraft creepers no-block-damage` | Entity damage without terrain damage (default) |
+| `/mavencraft creepers no-damage` | Creepers explode without damaging blocks or entities |
+| `/mavencraft creepers status` | Show the current mode |
+
+The client command forwards these options to the server. From a server console, use `/mavencraft-server creepers <mode>` with `vanilla`, `no-block-damage`, `no-damage`, or `status`.
 
 | Command | Description |
 | ------- | ----------- |
