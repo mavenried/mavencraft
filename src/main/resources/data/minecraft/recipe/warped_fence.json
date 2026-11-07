@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "wooden_fence",
+  "pattern": ["XSX", "XSX"],
+  "key": {"X": "minecraft:warped_planks", "S": "minecraft:stick"},
+  "result": {"id": "minecraft:warped_fence", "count": 4}
+}

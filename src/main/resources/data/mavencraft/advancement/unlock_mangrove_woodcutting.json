@@ -1,0 +1,29 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_log": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {"items": [{"items": "minecraft:mangrove_log"}]}
+    },
+    "has_planks": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {"items": [{"items": "minecraft:mangrove_planks"}]}
+    }
+  },
+  "requirements": [["has_log", "has_planks"]],
+  "rewards": {
+    "recipes": [
+      "mavencraft:stonecutting_mangrove_log_to_planks",
+      "mavencraft:stonecutting_mangrove_planks_to_slab",
+      "mavencraft:stonecutting_mangrove_planks_to_stairs",
+      "mavencraft:stonecutting_mangrove_planks_to_fence",
+      "mavencraft:stonecutting_mangrove_planks_to_fence_gate",
+      "mavencraft:stonecutting_mangrove_planks_to_door",
+      "mavencraft:stonecutting_mangrove_planks_to_trapdoor",
+      "mavencraft:stonecutting_mangrove_planks_to_button",
+      "mavencraft:stonecutting_mangrove_planks_to_pressure_plate",
+      "mavencraft:stonecutting_mangrove_planks_to_sign",
+      "mavencraft:stonecutting_mangrove_planks_to_hanging_sign"
+    ]
+  }
+}

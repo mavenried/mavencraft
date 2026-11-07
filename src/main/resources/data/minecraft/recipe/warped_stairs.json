@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "wooden_stairs",
+  "pattern": ["X  ", "XX ", "XXX"],
+  "key": {"X": "minecraft:warped_planks"},
+  "result": {"id": "minecraft:warped_stairs", "count": 6}
+}

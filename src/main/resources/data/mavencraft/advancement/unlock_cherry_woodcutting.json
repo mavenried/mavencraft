@@ -1,0 +1,29 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_log": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {"items": [{"items": "minecraft:cherry_log"}]}
+    },
+    "has_planks": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {"items": [{"items": "minecraft:cherry_planks"}]}
+    }
+  },
+  "requirements": [["has_log", "has_planks"]],
+  "rewards": {
+    "recipes": [
+      "mavencraft:stonecutting_cherry_log_to_planks",
+      "mavencraft:stonecutting_cherry_planks_to_slab",
+      "mavencraft:stonecutting_cherry_planks_to_stairs",
+      "mavencraft:stonecutting_cherry_planks_to_fence",
+      "mavencraft:stonecutting_cherry_planks_to_fence_gate",
+      "mavencraft:stonecutting_cherry_planks_to_door",
+      "mavencraft:stonecutting_cherry_planks_to_trapdoor",
+      "mavencraft:stonecutting_cherry_planks_to_button",
+      "mavencraft:stonecutting_cherry_planks_to_pressure_plate",
+      "mavencraft:stonecutting_cherry_planks_to_sign",
+      "mavencraft:stonecutting_cherry_planks_to_hanging_sign"
+    ]
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "wooden_sign",
+  "pattern": ["XXX", "XXX", " S "],
+  "key": {"X": "minecraft:warped_planks", "S": "minecraft:stick"},
+  "result": {"id": "minecraft:warped_sign", "count": 6}
+}

@@ -1,0 +1,30 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_log": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {"items": [{"items": "minecraft:bamboo_block"}]}
+    },
+    "has_planks": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {"items": [{"items": "minecraft:bamboo_planks"}]}
+    }
+  },
+  "requirements": [["has_log", "has_planks"]],
+  "rewards": {
+    "recipes": [
+      "mavencraft:stonecutting_bamboo_log_to_planks",
+      "mavencraft:stonecutting_bamboo_planks_to_slab",
+      "mavencraft:stonecutting_bamboo_planks_to_stairs",
+      "mavencraft:stonecutting_bamboo_planks_to_fence",
+      "mavencraft:stonecutting_bamboo_planks_to_fence_gate",
+      "mavencraft:stonecutting_bamboo_planks_to_door",
+      "mavencraft:stonecutting_bamboo_planks_to_trapdoor",
+      "mavencraft:stonecutting_bamboo_planks_to_button",
+      "mavencraft:stonecutting_bamboo_planks_to_pressure_plate",
+      "mavencraft:stonecutting_bamboo_planks_to_sign",
+      "mavencraft:stonecutting_bamboo_planks_to_hanging_sign",
+      "mavencraft:stonecutting_bamboo_planks_to_mosaic"
+    ]
+  }
+}

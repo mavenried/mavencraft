@@ -1,0 +1,47 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_quartz": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": { "items": [{ "items": "minecraft:quartz_block" }] }
+    },
+    "has_smooth_quartz": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": { "items": [{ "items": "minecraft:smooth_quartz" }] }
+    },
+    "has_amethyst": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": { "items": [{ "items": "minecraft:amethyst_block" }] }
+    },
+    "has_packed_ice": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": { "items": [{ "items": "minecraft:packed_ice" }] }
+    },
+    "has_blue_ice": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": { "items": [{ "items": "minecraft:blue_ice" }] }
+    },
+    "has_nether_wart": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": { "items": [{ "items": "minecraft:nether_wart_block" }] }
+    }
+  },
+  "requirements": [
+    ["has_quartz"],
+    ["has_smooth_quartz"],
+    ["has_amethyst"],
+    ["has_packed_ice"],
+    ["has_blue_ice"],
+    ["has_nether_wart"]
+  ],
+  "rewards": {
+    "recipes": [
+      "mavencraft:uncraft_quartz_block",
+      "mavencraft:uncraft_smooth_quartz_block",
+      "mavencraft:uncraft_amethyst_block",
+      "mavencraft:uncraft_packed_ice",
+      "mavencraft:uncraft_blue_ice",
+      "mavencraft:uncraft_nether_wart"
+    ]
+  }
+}

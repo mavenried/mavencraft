@@ -1,0 +1,29 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_log": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {"items": [{"items": "minecraft:warped_stem"}]}
+    },
+    "has_planks": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {"items": [{"items": "minecraft:warped_planks"}]}
+    }
+  },
+  "requirements": [["has_log", "has_planks"]],
+  "rewards": {
+    "recipes": [
+      "mavencraft:stonecutting_warped_log_to_planks",
+      "mavencraft:stonecutting_warped_planks_to_slab",
+      "mavencraft:stonecutting_warped_planks_to_stairs",
+      "mavencraft:stonecutting_warped_planks_to_fence",
+      "mavencraft:stonecutting_warped_planks_to_fence_gate",
+      "mavencraft:stonecutting_warped_planks_to_door",
+      "mavencraft:stonecutting_warped_planks_to_trapdoor",
+      "mavencraft:stonecutting_warped_planks_to_button",
+      "mavencraft:stonecutting_warped_planks_to_pressure_plate",
+      "mavencraft:stonecutting_warped_planks_to_sign",
+      "mavencraft:stonecutting_warped_planks_to_hanging_sign"
+    ]
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "group": "wooden_pressure_plate",
+  "pattern": ["XX"],
+  "key": {"X": "minecraft:acacia_planks"},
+  "result": {"id": "minecraft:acacia_pressure_plate", "count": 2}
+}

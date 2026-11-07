@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "group": "wooden_fence_gate",
+  "pattern": ["SXS", "SXS"],
+  "key": {"X": "minecraft:bamboo_planks", "S": "minecraft:stick"},
+  "result": {"id": "minecraft:bamboo_fence_gate", "count": 2}
+}
