@@ -120,8 +120,7 @@ public final class BreadcrumbTrail {
             if (previous != null && marker.connectFromPrevious()) {
                 Vec3 previousTrailPoint = previous.position().add(0.0, 0.2, 0.0);
                 Vec3 currentTrailPoint = position.add(0.0, 0.2, 0.0);
-                Gizmos.line(previousTrailPoint, currentTrailPoint, TRAIL_COLOR, TRAIL_WIDTH)
-                        .setAlwaysOnTop();
+                Gizmos.line(previousTrailPoint, currentTrailPoint, TRAIL_COLOR, TRAIL_WIDTH);
             }
 
             double x = position.x;
@@ -130,8 +129,7 @@ public final class BreadcrumbTrail {
             double half = 0.11;
             Gizmos.cuboid(
                             new AABB(x - half, y - half, z - half, x + half, y + half, z + half),
-                            GizmoStyle.strokeAndFill(MARKER_FILL, MARKER_OUTLINE_WIDTH, MARKER_OUTLINE))
-                    .setAlwaysOnTop();
+                            GizmoStyle.strokeAndFill(MARKER_FILL, MARKER_OUTLINE_WIDTH, MARKER_OUTLINE));
             previous = marker;
         }
     }
