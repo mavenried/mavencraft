@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.5.1
+
+### Added
+
+- Pale oak log and plank stonecutting recipes for planks, slabs, stairs, fences, fence gates, doors, trapdoors, signs, hanging signs, buttons, and pressure plates.
+
 ## 0.5.0
 
 ### Added
