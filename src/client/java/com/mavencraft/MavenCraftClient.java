@@ -5,6 +5,8 @@ import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.builder.RequiredArgumentBuilder;
+import java.util.function.IntConsumer;
+import java.util.function.IntSupplier;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
@@ -36,6 +38,8 @@ public class MavenCraftClient implements ClientModInitializer {
         MavenCraftRenderer.register();
 
         BreadcrumbTrail.register();
+
+        DamageIndicators.register();
 
         KeyMapping.Category category =
                 KeyMapping.Category.register(Identifier.fromNamespaceAndPath("mavencraft", "general"));
@@ -187,7 +191,15 @@ public class MavenCraftClient implements ClientModInitializer {
                                         showHud(ctx.getSource().getClient(), "Radar Disabled", ChatFormatting.RED);
 
                                         return 1;
-                                    })))
+                                    }))
+                            .then(colorCommand("color", "Radar", MavenCraftRenderer::getRadarColor,
+                                    MavenCraftRenderer::setRadarColor))
+                    )
+                    .then(LiteralArgumentBuilder.<FabricClientCommandSource>literal("damage")
+                            .then(colorCommand("color", "Damage number", MavenCraftRenderer::getDamageColor,
+                                    MavenCraftRenderer::setDamageColor))
+                            .then(colorCommand("outline", "Damage outline", MavenCraftRenderer::getDamageOutlineColor,
+                                    MavenCraftRenderer::setDamageOutlineColor)))
                     .then(LiteralArgumentBuilder.<FabricClientCommandSource>literal("aim")
                             .then(LiteralArgumentBuilder.<FabricClientCommandSource>literal("enable")
                                     .executes(ctx -> {
@@ -288,6 +300,51 @@ public class MavenCraftClient implements ClientModInitializer {
             connection.getConnection().send(new ServerboundChatCommandPacket("mavencraft-server creepers " + mode));
         }
         return 1;
+    }
+
+    private static LiteralArgumentBuilder<FabricClientCommandSource> colorCommand(
+            String literal, String label, IntSupplier getColor, IntConsumer setColor) {
+        return LiteralArgumentBuilder.<FabricClientCommandSource>literal(literal)
+                .executes(ctx -> {
+                    showHud(
+                            ctx.getSource().getClient(),
+                            label + " color: #" + formatHexColor(getColor.getAsInt()),
+                            ChatFormatting.AQUA);
+                    return 1;
+                })
+                .then(RequiredArgumentBuilder.<FabricClientCommandSource, String>argument(
+                                "hex", StringArgumentType.word())
+                        .executes(ctx -> {
+                            String input = StringArgumentType.getString(ctx, "hex");
+                            Integer color = parseHexColor(input);
+                            if (color == null) {
+                                showHud(
+                                        ctx.getSource().getClient(),
+                                        "Use a six-digit RGB color, for example #FF4040",
+                                        ChatFormatting.RED);
+                                return 0;
+                            }
+                            setColor.accept(color);
+                            showHud(
+                                    ctx.getSource().getClient(),
+                                    label + " color set to #" + formatHexColor(color),
+                                    ChatFormatting.GREEN);
+                            return 1;
+                        }));
+    }
+
+    private static Integer parseHexColor(String input) {
+        String hex = input.startsWith("#") ? input.substring(1) : input;
+        if (!hex.matches("[0-9a-fA-F]{6}")) return null;
+        try {
+            return Integer.parseInt(hex, 16);
+        } catch (NumberFormatException e) {
+            return null;
+        }
+    }
+
+    private static String formatHexColor(int color) {
+        return String.format(java.util.Locale.ROOT, "%06X", color & 0xFFFFFF);
     }
 
     private static void showHud(net.minecraft.client.Minecraft client, String message, ChatFormatting color) {
