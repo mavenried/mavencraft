@@ -25,6 +25,7 @@ public final class DamageIndicators {
     private static ClientLevel trackedLevel;
 
     private record Popup(Vec3 position, float damage, long createdAtNanos) {}
+
     private record PendingDamage(LivingEntity target, float healthBefore, int age) {}
 
     private DamageIndicators() {}
@@ -73,10 +74,11 @@ public final class DamageIndicators {
             if (target.getHealth() < pending.healthBefore()) {
                 float damage = pending.healthBefore() - target.getHealth();
                 ThreadLocalRandom random = ThreadLocalRandom.current();
-                Vec3 position = target.position().add(
-                        random.nextDouble(-0.3, 0.3),
-                        target.getBbHeight() + random.nextDouble(0.15, 0.5),
-                        random.nextDouble(-0.3, 0.3));
+                Vec3 position = target.position()
+                        .add(
+                                random.nextDouble(-0.3, 0.3),
+                                target.getBbHeight() + random.nextDouble(0.15, 0.5),
+                                random.nextDouble(-0.3, 0.3));
                 POPUPS.add(new Popup(position, damage, now));
                 resolvedTargets.add(target);
             } else {
@@ -101,10 +103,14 @@ public final class DamageIndicators {
             int color = (alpha << 24) | MavenCraftRenderer.getDamageColor();
             int outlineColor = (alpha << 24) | MavenCraftRenderer.getDamageOutlineColor();
             Vec3 position = popup.position().add(0.0, progress * 0.8, 0.0);
-            Gizmos.billboardText(formatDamage(popup.damage()), position,
+            Gizmos.billboardText(
+                            formatDamage(popup.damage()),
+                            position,
                             TextGizmo.Style.forColorAndCentered(outlineColor).withScale(0.76f))
                     .setAlwaysOnTop();
-            Gizmos.billboardText(formatDamage(popup.damage()), position,
+            Gizmos.billboardText(
+                            formatDamage(popup.damage()),
+                            position,
                             TextGizmo.Style.forColorAndCentered(color).withScale(0.65f))
                     .setAlwaysOnTop();
         }

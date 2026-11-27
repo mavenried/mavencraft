@@ -192,13 +192,21 @@ public class MavenCraftClient implements ClientModInitializer {
 
                                         return 1;
                                     }))
-                            .then(colorCommand("color", "Radar", MavenCraftRenderer::getRadarColor,
-                                    MavenCraftRenderer::setRadarColor))
-                    )
+                            .then(colorCommand(
+                                    "color",
+                                    "Radar",
+                                    MavenCraftRenderer::getRadarColor,
+                                    MavenCraftRenderer::setRadarColor)))
                     .then(LiteralArgumentBuilder.<FabricClientCommandSource>literal("damage")
-                            .then(colorCommand("color", "Damage number", MavenCraftRenderer::getDamageColor,
+                            .then(colorCommand(
+                                    "color",
+                                    "Damage number",
+                                    MavenCraftRenderer::getDamageColor,
                                     MavenCraftRenderer::setDamageColor))
-                            .then(colorCommand("outline", "Damage outline", MavenCraftRenderer::getDamageOutlineColor,
+                            .then(colorCommand(
+                                    "outline",
+                                    "Damage outline",
+                                    MavenCraftRenderer::getDamageOutlineColor,
                                     MavenCraftRenderer::setDamageOutlineColor)))
                     .then(LiteralArgumentBuilder.<FabricClientCommandSource>literal("aim")
                             .then(LiteralArgumentBuilder.<FabricClientCommandSource>literal("enable")

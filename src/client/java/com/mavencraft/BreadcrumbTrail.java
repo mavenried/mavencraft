@@ -128,8 +128,8 @@ public final class BreadcrumbTrail {
             double z = position.z;
             double half = 0.11;
             Gizmos.cuboid(
-                            new AABB(x - half, y - half, z - half, x + half, y + half, z + half),
-                            GizmoStyle.strokeAndFill(MARKER_FILL, MARKER_OUTLINE_WIDTH, MARKER_OUTLINE));
+                    new AABB(x - half, y - half, z - half, x + half, y + half, z + half),
+                    GizmoStyle.strokeAndFill(MARKER_FILL, MARKER_OUTLINE_WIDTH, MARKER_OUTLINE));
             previous = marker;
         }
     }
