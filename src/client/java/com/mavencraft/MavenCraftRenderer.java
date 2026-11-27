@@ -186,6 +186,33 @@ public final class MavenCraftRenderer {
         STATE.save();
     }
 
+    public static int getRadarColor() {
+        return STATE.radarColor & 0xFFFFFF;
+    }
+
+    public static void setRadarColor(int color) {
+        STATE.radarColor = color & 0xFFFFFF;
+        STATE.save();
+    }
+
+    public static int getDamageColor() {
+        return STATE.damageColor & 0xFFFFFF;
+    }
+
+    public static void setDamageColor(int color) {
+        STATE.damageColor = color & 0xFFFFFF;
+        STATE.save();
+    }
+
+    public static int getDamageOutlineColor() {
+        return STATE.damageOutlineColor & 0xFFFFFF;
+    }
+
+    public static void setDamageOutlineColor(int color) {
+        STATE.damageOutlineColor = color & 0xFFFFFF;
+        STATE.save();
+    }
+
     public static void invalidateCache() {
         ticksSinceScan = SCAN_INTERVAL;
         foundOres.clear();

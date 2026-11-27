@@ -77,6 +77,9 @@ public final class RadarManager {
             float angle = (float) Math.atan2(localX, localZ) + (float) org.joml.Math.PI_OVER_2;
 
             float dist = (float) delta.length();
+            if (dist > range) {
+                continue;
+            }
 
             THREATS.add(new Threat(angle, dist));
         }
@@ -89,13 +92,11 @@ public final class RadarManager {
 
             threat.smoothedAngle = Mth.rotLerp(smoothing, threat.smoothedAngle, threat.targetAngle);
 
-            float width = 0.10f + (1.0f - (threat.distance / range)) * 0.35f;
+            float proximity = Mth.clamp(1.0f - (threat.distance / range), 0.0f, 1.0f);
 
-            float alpha = 1.0f - (threat.distance / range);
+            float size = 2.0f + proximity * 5.0f;
 
-            float size = 2.0f + (1.0f - (threat.distance / range)) * 5.0f;
-
-            ARCS.add(new RadarArc(threat.smoothedAngle, size, alpha, threat.distance));
+            ARCS.add(new RadarArc(threat.smoothedAngle, size, proximity, threat.distance));
         }
     }
 

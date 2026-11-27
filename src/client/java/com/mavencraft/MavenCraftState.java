@@ -18,6 +18,12 @@ public class MavenCraftState {
 
     public int radius = 64;
 
+    public int radarColor = 0xFF4040;
+
+    public int damageColor = 0xFF3030;
+
+    public int damageOutlineColor = 0xFFD54A;
+
     public Set<String> ores = new HashSet<>();
 
     public static MavenCraftState load() {
