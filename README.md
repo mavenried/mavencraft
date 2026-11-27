@@ -4,11 +4,14 @@ A Fabric mod for Minecraft 26.3 with client overlays, server-side gameplay featu
 
 - **X-Ray / Ore ESP** — highlights ores through walls with configurable colors and scan radius
 - **Threat Radar** — a compass-ring HUD that shows nearby hostile mobs as directional chevrons
+- **Damage Indicators** — floating numbers show damage dealt to enemies
 - **Trajectory Preview** — draws a real-time arc for bows, crossbows, ender pearls, snowballs, and splash/lingering potions
 - **Breadcrumb Trail** — leaves connected waypoints along your route so you can find your way back
 - **Sprint Flight Multiplier** — boosts horizontal flight acceleration while sprinting with Fantastic Wings
 - **Fantastic Wings persistence** — restores saved wings after death or rejoining; drinking bat blood clears the saved type
 - **Creeper explosion modes** — choose vanilla explosions, no block damage, or no damage at all
+
+See [CHANGELOG.md](CHANGELOG.md) for release notes.
 
 > **Personal-use mod.** Use responsibly and only on servers where client-side mods are permitted.
 
@@ -64,12 +67,13 @@ Settings (enabled state, radius, active ore set) persist to `<config-dir>/mavenc
 
 ### Threat Radar
 
-A circular HUD centered on screen. Hostile mobs within `range` blocks are shown as red chevrons pointing toward their direction; chevrons scale and fade with distance.
+A circular HUD centered on screen. Hostile mobs within `range` blocks are shown as smooth red chevrons pointing toward their direction; chevrons scale and fade with distance, disappearing cleanly at the edge of the range.
 
 | Command                     | Description           |
 | --------------------------- | --------------------- |
 | `/mavencraft radar enable`  | Enable the radar HUD  |
 | `/mavencraft radar disable` | Disable the radar HUD |
+| `/mavencraft radar color [RRGGBB]` | Show or set the chevron color |
 
 Tunable constants in `RadarManager`:
 
@@ -78,6 +82,21 @@ Tunable constants in `RadarManager`:
 | `range`      | `48.0`  | Detection radius in blocks |
 | `maxThreats` | `5`     | Maximum chevrons drawn     |
 | `smoothing`  | `0.18`  | Angle lerp factor per tick |
+
+---
+
+### Damage Indicators
+
+Displays a floating damage number above an enemy when your attack reduces its health. Numbers appear in red with a gold outline, drift upward smoothly, and fade quickly. Their starting positions vary slightly to keep successive hits distinct; damage is shown as a whole number.
+
+Indicators are based on the damage event attributed to you, so they cover melee hits, charged attacks, mace and spear hits, and killing blows.
+
+| Command | Description |
+| ------- | ----------- |
+| `/mavencraft damage color [RRGGBB]` | Show or set the number color |
+| `/mavencraft damage outline [RRGGBB]` | Show or set the outline color |
+
+Colors accept six-digit RGB hex, with or without a leading `#` (for example, `FF4040`). The radar and damage indicator colors persist in `<config-dir>/mavencraft.json`.
 
 ---
 
@@ -98,7 +117,7 @@ Bow arcs account for charge level. Crossbow arcs include player momentum. Other 
 
 ### Breadcrumb Trail
 
-Leaves small connected waypoints along your path. Markers are placed farther apart at higher speeds and closer together when your direction changes, making the trail useful on foot and while flying. The trail holds up to 1,024 markers and clears when disabled or when changing worlds.
+Leaves small connected waypoints along your path. Markers are placed farther apart at higher speeds and closer together when your direction changes, making the trail useful on foot and while flying. Blocks obstruct the markers and connecting lines. The trail holds up to 1,024 markers and clears when disabled or when changing worlds.
 
 | Command                            | Description                  |
 | ---------------------------------- | ---------------------------- |
